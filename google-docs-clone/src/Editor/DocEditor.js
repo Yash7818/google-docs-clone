@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import isHotkey from 'is-hotkey'
 import { Editable, withReact,Slate, useSlate } from 'slate-react'
-import { Editor, Transforms, createEditor } from 'slate'
+import { Text, Editor, Transforms, createEditor } from 'slate'
 import { withHistory } from 'slate-history'
 import initialValue from "./initialValue"
 import {Button, Icon, Toolbar} from "./editorComp"
+import {css} from "@emotion/css"
 
 const IMPKEYS = {
   'mod+b': 'bold',
@@ -17,9 +18,32 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 const DocEditor = () => {
   const [value, setValue] = useState(initialValue)
+  const [search, setSearch] = useState();
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+  const wordSearch = useCallback(
+    ([node,path]) => {
+      const block = [] 
+      if(search && Text.isText(node)) {
+        const {text} = node
+        const sections = text.split(search)
+        let offset = 0
+        sections.forEach((section,i) => {
+          if(i) {
+            block.push({
+              anchor: {path, offset: offset - search.length},
+              focus: {path, offset},
+              highlight: true
+            })
+          }
+          offset = offset + section.length + search.length
+        })
+      } 
+      return block
+    },
+    [search]
+  )
 
   return (
     <Slate editor={editor} value={value} onChange={value => setValue(value)}>
@@ -37,10 +61,38 @@ const DocEditor = () => {
         <BlockButton format="block-quote" icon="format_quote" />
         <BlockButton format="numbered-list" icon="format_list_numbered" />
         <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+        <div
+          className={css`
+            position: relative;
+          `}
+        >
+          <Icon
+            className={css`
+              position: absolute;
+              top: 0.25em;
+              left: 0.3em;
+              color: #ccc;
+            `}
+          >
+            search
+          </Icon>
+          <input
+            type="search"
+            placeholder="Search the text..."
+            onChange={e => setSearch(e.target.value)}
+            className={css`
+              padding-left: 2em;
+              padding-top: 5px;
+              padding-bottom: 5px;
+              width: 100%;
+            `}
+          />
+        </div>
         </Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
+        decorate={wordSearch}
         placeholder="Enter some rich text…"
         spellCheck
         autoFocus
@@ -142,8 +194,18 @@ const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.underline) {
     children = <u>{children}</u>
   }
-
-  return <span {...attributes}>{children}</span>
+  
+  return (
+    <span
+      {...attributes}
+      className={css`
+        font-weight: ${leaf.bold && 'bold'};
+        background-color: ${leaf.highlight && '#ffeeba'};
+      `}
+    >
+      {children}
+    </span>
+  )
 }
 
 const BlockButton = ({ format, icon }) => {
