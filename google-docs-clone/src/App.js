@@ -1,5 +1,5 @@
 import React from "react"
-import DocEditor from "./DocEditor"
+import DocEditor from "./Editor/DocEditor"
 
 const App = () => {
   return (
