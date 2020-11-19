@@ -19,10 +19,10 @@ export const Button = React.forwardRef(
             color: ${reversed
               ? active
                 ? 'white'
-                : '#aaa'
+                : '#ffff'
               : active
               ? 'black'
-              : '#ccc'};
+              : '#ffff'};
           `
         )}
       />
@@ -77,12 +77,15 @@ export const Button = React.forwardRef(
         className={cx(
           className,
           css`
+            background-color: #3aaaf0;
             position: relative;
-            padding: 1px 18px 17px;
+            padding: 10px 18px 17px;
             margin: 0 -20px;
             border-bottom: 2px solid #eee;
             margin-bottom: 30px;
-            margin-top: 10px;
+            &:hover {
+              transform: translate(1.2);
+            }
           `
         )}
       />

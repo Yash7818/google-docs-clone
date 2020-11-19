@@ -18,29 +18,30 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 const DocEditor = () => {
   const [value, setValue] = useState(initialValue)
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
-  const wordSearch = useCallback(
+  const decorate = useCallback(
     ([node,path]) => {
-      const block = [] 
+      const ranges = [] 
       if(search && Text.isText(node)) {
         const {text} = node
         const sections = text.split(search)
         let offset = 0
-        sections.forEach((section,i) => {
-          if(i) {
-            block.push({
+        sections.forEach((part,i) => {
+          if(i !== 0) {
+            ranges.push({
               anchor: {path, offset: offset - search.length},
               focus: {path, offset},
               highlight: true
             })
+            console.log(part,i, offset);
           }
-          offset = offset + section.length + search.length
+          offset = offset + part.length + search.length
         })
       } 
-      return block
+      return ranges
     },
     [search]
   )
@@ -76,10 +77,16 @@ const DocEditor = () => {
           >
             search
           </Icon>
+          <form onSubmit={(e) => {
+            e.preventDefault()
+          }}>
           <input
             type="search"
             placeholder="Search the text..."
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => {
+              console.log(e.target.value);
+              setSearch(e.target.value)
+            }}
             className={css`
               padding-left: 2em;
               padding-top: 5px;
@@ -87,12 +94,13 @@ const DocEditor = () => {
               width: 100%;
             `}
           />
+          </form>
         </div>
         </Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        decorate={wordSearch}
+        decorate={decorate}
         placeholder="Enter some rich text…"
         spellCheck
         autoFocus
