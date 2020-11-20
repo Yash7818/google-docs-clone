@@ -18,29 +18,32 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 const DocEditor = () => {
   const [value, setValue] = useState(initialValue)
-  const [search, setSearch] = useState();
-  const renderElement = useCallback(props => <Element {...props} />, [])
+  const [search, setSearch] = useState("");
+  const [font, setFont] = useState("");
+  //console.log(font);
+  const renderElement = useCallback(props =>  <Element {...props} font={font} />, [font])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
-  const wordSearch = useCallback(
+  const decorate = useCallback(
     ([node,path]) => {
-      const block = [] 
+      const ranges = [] 
       if(search && Text.isText(node)) {
         const {text} = node
         const sections = text.split(search)
         let offset = 0
-        sections.forEach((section,i) => {
-          if(i) {
-            block.push({
+        sections.forEach((part,i) => {
+          if(i !== 0) {
+            ranges.push({
               anchor: {path, offset: offset - search.length},
               focus: {path, offset},
               highlight: true
             })
+            console.log(part,i, offset);
           }
-          offset = offset + section.length + search.length
+          offset = offset + part.length + search.length
         })
       } 
-      return block
+      return ranges
     },
     [search]
   )
@@ -76,10 +79,16 @@ const DocEditor = () => {
           >
             search
           </Icon>
+          <form onSubmit={(e) => {
+            e.preventDefault()
+          }}>
           <input
             type="search"
             placeholder="Search the text..."
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => {
+              console.log(e.target.value);
+              setSearch(e.target.value)
+            }}
             className={css`
               padding-left: 2em;
               padding-top: 5px;
@@ -87,12 +96,31 @@ const DocEditor = () => {
               width: 100%;
             `}
           />
+          </form>
         </div>
+        <select onChange={(e) => {
+          console.log(e.target.value)
+          setFont(e.target.value);
+        }}
+        className={css`
+        padding-left: 2em;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        `}>
+          <option value="Arial" className={css`font-family: Arial`}>Arial</option>
+          <option value="Verdana" className={css`font-family: Verdana`}>Verdana</option>
+          <option value="Times New Roman" className={css`font-family: Times New Roman`}>Times New Roman</option>
+          <option value="Arial Black" className={css`font-family: Arial Black`}>Arial Black</option>
+          <option value="Comic Sans MS" className={css`font-family: Comic Sans MS`}>Comic Sans MS</option>
+          <option value="Courier New" className={css`font-family: Courier New`}>Courier New</option>
+          <option value="Times" className={css`font-family: Times`}>Times</option>
+          <option value="Calibri" className={css`font-family: Arial`}>Calibri</option>
+        </select>
         </Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        decorate={wordSearch}
+        decorate={decorate}
         placeholder="Enter some rich text…"
         spellCheck
         autoFocus
@@ -151,31 +179,31 @@ const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
 }
-
-const Element = ({ attributes, children, element }) => {
+const Element = ({ font, attributes, children, element}) => {
+  //console.log(attributes, font)
   switch (element.type) {
     case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>
+      return <blockquote {...attributes} className={css`font-family: ${font}`}>{children}</blockquote>
     case 'bulleted-list':
-      return <ul {...attributes}>{children}</ul>
+      return <ul {...attributes} className={css`font-family: ${font}`}>{children}</ul>
     case 'heading-one':
-      return <h1 {...attributes}>{children}</h1>
+      return <h1 {...attributes} className={css`font-family: ${font}`}>{children}</h1>
     case 'heading-two':
-      return <h2 {...attributes}>{children}</h2>
+      return <h2 {...attributes} className={css`font-family: ${font}`}>{children}</h2>
     case 'heading-three':
-      return <h3 {...attributes}>{children}</h3>
+      return <h3 {...attributes} className={css`font-family: ${font}`}>{children}</h3>
     case 'heading-four':
-      return <h4 {...attributes}>{children}</h4>
+      return <h4 {...attributes} className={css`font-family: ${font}`}>{children}</h4>
     case 'heading-five':
-      return <h5 {...attributes}>{children}</h5>
+      return <h5 {...attributes} className={css`font-family: ${font}`}>{children}</h5>
     case 'heading-six':
-      return <h6 {...attributes}>{children}</h6>
+      return <h6 {...attributes} className={css`font-family: ${font}`}>{children}</h6>
     case 'list-item':
-      return <li {...attributes}>{children}</li>
+      return <li {...attributes} className={css`font-family: ${font}`}>{children}</li>
     case 'numbered-list':
-      return <ol {...attributes}>{children}</ol>
+      return <ol {...attributes} className={css`font-family: ${font}`}>{children}</ol>
     default:
-      return <p {...attributes}>{children}</p>
+      return <p {...attributes} className={css`font-family: ${font}`}>{children}</p>
   }
 }
 const Leaf = ({ attributes, children, leaf }) => {
