@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Baloo 2', cursive;
+}
+.bg{
+    /* width: 100%; */
+    position:absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.main-home{
+    display: flex;
+}
+.home-svg{
+    margin: 7em 12em;
+}
+.main-home h1{
+    font-size: 5em;
+    margin: 2.6em 2.5em;
+}
+header nav{
+    float:right;
+    margin-top: 1.6em;
+    margin-right: 1em;
+}
+header nav a{
+    margin:2em 1.5em;
+    text-decoration: none;
+    font-size:1.7em;
+    color:#000;
+}
+.footer{
+    padding: 2em;
+    /* border-top: #fff solid 1px; */
+    background: rgba(1,1,1,0.5);
+    /* opacity: 0.5; */
+    margin-top: 2em;
+}
+.footer-content{
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    opacity: 1;
+}
+.copyright{
+    margin: 1em 0;
+    text-align: center; 
+}
+.contact-links{
+    margin: 2em 2em;
+}
+.contact-links ul{
+    /* display: flex; */
+    margin: 1em 0;
+}
+.contact-links ul li{
+    list-style: none;
+    margin-right: 1em;
+    margin-top: 1em;
+    z-index: 10;
+}
+
+.contact-links ul li i{
+    font-size: 2em;
+}
+.contact-links ul li span{
+    margin-left: 1em;
+    font-size: 1.2em;
+    padding-bottom: .4em ;
+}
+.about{
+    height: 100vh;
+}
+.about-svg{
+    padding: 2em;
+    padding-top: 4em;
+}
+.about-svg-bg{
+    position: absolute;
+    left: 58em;
+    top:47em;
+}
+a{
+    text-decoration: none;
+    color:#000;
+}
