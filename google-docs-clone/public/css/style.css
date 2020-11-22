@@ -105,6 +105,7 @@ a{
   .divi-container h1 {
     margin: 1em 0;
     text-align: center;
+    color: #fff;
   }
   .divi-container {
     margin-left: 36.5%;
@@ -193,5 +194,11 @@ a{
     float: right;
     opacity: 0.6;
     cursor: pointer;
+    color: #fff;
   }
-  
+  .extras{
+    color:rgba(255, 255, 255, 0.795);
+  }
+  .extras a{
+    color: #fff;
+  }

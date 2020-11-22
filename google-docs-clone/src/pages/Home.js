@@ -25,15 +25,15 @@ function Home(){
     },[userInfo])
 
     const submitHandler=(e)=>{
-        e.preventDefault(e);
+        e.preventDefault();
         dispatch(signin(email,password));
         setModal1(false);
         if(error){
             setModal1(true);
         }
     }
-    const registerHandler = () =>{
-        e.preventDefault(e);
+    const registerHandler = (e) =>{
+        e.preventDefault();
         dispatch(register(name,email,password));
         setModal2(false);
     }
@@ -53,8 +53,8 @@ function Home(){
             <a href="#">HOME</a>
             <a href="#about">ABOUT</a>
             <a href="#contact">CONTACT</a>
-            <a href="#" onClick={setModal2(true)}>SIGN UP</a>
-            <a href="#" onClick={setModal1(true)}>SIGN IN</a>
+            <a href="#" onClick={()=>setModal2(true)}>SIGN UP</a>
+            <a href="#" onClick={()=>setModal1(true)}>SIGN IN</a>
         </nav>
     </header>
    
@@ -71,7 +71,7 @@ function Home(){
                             <input type="password" name="password" required onChange={(e) => setPassword(e.target.value)}></input>
                             <label>Password</label>
                         </div>
-                        <div>
+                        <div className="extras">
                             Don't have an account? <a href="#" onClick={() => { setModal1(false); setModal2(true); }}>Sign Up</a>
                         </div>
                         <input type="submit" value="Log In"></input>
@@ -99,7 +99,7 @@ function Home(){
                             <input type="password" required></input>
                             <label>Confirm Password</label>
                         </div>
-                        <div>
+                        <div className="extras">
                             Already have an account? <a href="#" onClick={() => { setModal2(false); setModal1(true)}}>Log In</a>
                         </div>
                         <input type="submit" value="Sign Up"></input>
