@@ -21,7 +21,7 @@ export const Button = React.forwardRef(
                 ? 'white'
                 : '#ffff'
               : active
-              ? 'black'
+              ? '#000'
               : '#ffff'};
           `
         )}
@@ -39,7 +39,7 @@ export const Button = React.forwardRef(
           'material-icons',
           className,
           css`
-            font-size: 18px;
+            font-size: 1.3em;
             vertical-align: text-bottom;
           `
         )}
@@ -77,12 +77,10 @@ export const Button = React.forwardRef(
         className={cx(
           className,
           css`
-            background-color: #3aaaf0;
-            position: relative;
-            padding: 10px 18px 17px;
+           background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);           padding:1em 2.5em;
             margin: 0 -20px;
             border-bottom: 2px solid #eee;
-            margin-bottom: 30px;
+            margin-bottom: 1.4em;
             &:hover {
               transform: translate(1.2);
             }

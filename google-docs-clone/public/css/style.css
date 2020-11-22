@@ -10,6 +10,9 @@ body{
     padding: 0;
     font-family: 'Baloo 2', cursive;
 }
+.main1{
+    font-family: 'Baloo 2', cursive;
+}
 .bg{
     /* width: 100%; */
     position:absolute;
@@ -93,3 +96,102 @@ a{
     text-decoration: none;
     color:#000;
 }
+.divi-container {
+    position: fixed;
+    border-radius: 1em;
+    top: 13%;
+    z-index: 10;
+  }
+  .divi-container h1 {
+    margin: 1em 0;
+    text-align: center;
+  }
+  .divi-container {
+    margin-left: 36.5%;
+    margin-bottom: 1em;
+    width: 400px;
+    background: rgba(1, 1, 1, 0.95);
+    padding: 40px;
+    box-sizing: border-box;
+    /* transform: translate(-50%,-50%);   */
+    /* transition: all 250ms linear; */
+  }
+  .divi-container input {
+    padding: 8px 0;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .divi-container input {
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid #999;
+  }
+  .divi-container input[type="submit"] {
+    border-bottom: none;
+    cursor: pointer;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    border: 1px solid #999;
+    color: tomato;
+    font-weight: 600;
+  }
+  .divi-container form .product-container div {
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .divi-container form .product-container div label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    pointer-events: none;
+    color: #999;
+    transition: 0.4s;
+  }
+  .divi-container form .product-container .avatar label{
+    top: -12px;
+    color: tomato;
+    font-size: 14px;
+  }
+  .divi-container div div input:focus ~ label,
+  .divi-container div div input:valid ~ label {
+    top: -12px;
+    color: tomato;
+    font-size: 14px;
+  }
+  
+  /* .divi-container form ul li input:not(:placeholder-shown) ~ label{
+         top: -12px;
+         color: tomato;
+         font-size: 14px;
+     } */
+  
+  .divi-container input[type="email"]:focus,
+  .divi-container input[type="text"]:focus {
+    animation: animateio 0.4s linear;
+    border-bottom: 2px solid tomato;
+  }
+  .divi-container input[type="password"]:focus {
+    /* border-bottom: 2px solid tomato; */
+    animation: animateio 0.4s linear;
+    border-bottom: 2px solid tomato;
+  }
+  
+  @keyframes animateio {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+  .close{
+    float: right;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  

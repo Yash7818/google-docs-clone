@@ -5,6 +5,7 @@ import { Text, Editor, Transforms, createEditor } from 'slate'
 import { withHistory } from 'slate-history'
 import initialValue from "./initialValue"
 import {Button, Icon, Toolbar} from "./editorComp"
+// import {FontFamilyPlugin,Font} from "@slate-editor/font-family-plugin"
 import {css} from "@emotion/css"
 
 const IMPKEYS = {
@@ -49,7 +50,7 @@ const DocEditor = () => {
   )
 
   return (
-    <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+    <Slate editor={editor} value={value} onChange={value => setValue(value)} >
       <Toolbar>
         <MarkButton format="bold" icon="format_bold" />
         <MarkButton format="italic" icon="format_italic" />
@@ -114,7 +115,7 @@ const DocEditor = () => {
           <option value="Comic Sans MS" className={css`font-family: Comic Sans MS`}>Comic Sans MS</option>
           <option value="Courier New" className={css`font-family: Courier New`}>Courier New</option>
           <option value="Times" className={css`font-family: Times`}>Times</option>
-          <option value="Calibri" className={css`font-family: Arial`}>Calibri</option>
+          <option value="Calibri" className={css`font-family: calibri`}>Calibri</option>
         </select>
         </Toolbar>
       <Editable
